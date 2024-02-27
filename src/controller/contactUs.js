@@ -1,4 +1,7 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const contactUs = async (req, res) => {
   try {
@@ -13,15 +16,15 @@ const contactUs = async (req, res) => {
       port: 465,
       secure: true,
       auth: {
-        user: 'assignwise9@gmail.com',
-        pass: 'qwub oguq wvbk mtjg'
+        user: process.env.email,
+        pass: process.env.password
       }
     };
 
     const transporter = nodemailer.createTransport(smtpConfig);
 
     const mailOptions = {
-      from: 'assignwise9@gmail.com',
+      from: process.env.email,
       to: email,
       subject: `Hi ${firstname}`,
       text: 'Thank you for sending a message. We will get back to you soon.'
@@ -29,7 +32,7 @@ const contactUs = async (req, res) => {
 
     const mailToYouOptions = {
       from: email,
-      to: 'assignwise9@gmail.com',
+      to: process.env.email,
       subject: `New Contact Us Message from ${firstname} ${lastname}`,
       text: `You have a new message from ${firstname} ${lastname} (${email}):\n\n${message}`
     };
